@@ -12,8 +12,8 @@ import java.io.IOException;
 
 import com.harshajayamanna.s3fileUpload.exception.FileUploadException;
 
-public class ImgValidator implements ConstraintValidator<ValidateImgSize, Object> {
-   public void initialize(ValidateImgSize constraint) {
+public class ImgValidator implements ConstraintValidator<ValidateImg, Object> {
+   public void initialize(ValidateImg constraint) {
    }
 
    public boolean isValid(Object obj, ConstraintValidatorContext context) {
@@ -22,7 +22,7 @@ public class ImgValidator implements ConstraintValidator<ValidateImgSize, Object
       try {
          image = convertMultiPartToFile((MultipartFile)obj);
       } catch (IOException e) {
-         throw new FileUploadException("AvatarImgValidator:Unable to convert input stream to file.");
+         throw new FileUploadException("ImgValidator:Unable to convert input stream to file.");
       }
 
       BufferedImage bimg = null;
@@ -30,7 +30,7 @@ public class ImgValidator implements ConstraintValidator<ValidateImgSize, Object
       try {
          bimg = ImageIO.read(image);
       } catch (IOException e) {
-         throw new FileUploadException("AvatarImgValidator: Unable to read image.");
+         throw new FileUploadException("ImgValidator: Unable to read image.");
       }
 
       int width          = bimg.getWidth();

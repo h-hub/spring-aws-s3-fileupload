@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = ImgValidator.class)
 @Documented
-public @interface ValidateImgSize {
+public @interface ValidateImg {
     String message() default "Check width and Height of the image (width and height should be equal to 1024px)";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
