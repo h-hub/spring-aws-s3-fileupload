@@ -35,7 +35,7 @@ public class FileUploadController {
 			"application/xml" })
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ImageDto uploadAvatar(@RequestParam(value = "imageFile", required = true) @ValidateImg MultipartFile image) {
+	public ImageDto uploadImage(@RequestParam(value = "imageFile", required = true) @ValidateImg MultipartFile image) {
 
 		String bucketName = "public-bucket-for-files";
 
