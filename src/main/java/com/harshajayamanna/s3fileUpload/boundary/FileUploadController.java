@@ -1,5 +1,6 @@
 package com.harshajayamanna.s3fileUpload.boundary;
 
+import java.awt.Image;
 import java.io.IOException;
 
 import com.harshajayamanna.s3fileUpload.service.ImageService;
@@ -13,25 +14,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+@RestController
 public class FileUploadController {
 
+
+	private final ImageService imageService;
+
 	@Autowired
-	private ImageService imageService;
+	FileUploadController(ImageService imageService) {
+		this.imageService = imageService;
+	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@RequestMapping(value = "/user/avatar", method = RequestMethod.POST, produces = { "application/json",
+	@RequestMapping(value = "/image/upload", method = RequestMethod.POST, produces = { "application/json",
 			"application/xml" })
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public String uploadAvatar(@RequestParam(value = "imageFile", required = true) @ValidateImgSize MultipartFile image) throws IOException {
+	public ImageDto uploadAvatar(@RequestParam(value = "imageFile", required = true) @ValidateImgSize MultipartFile image) {
 
 		String bucketName = "public-bucket-for-files";
 
 		String imageUrl = imageService.uploadImage(image, bucketName);
 
-		return imageUrl;
+		ImageDto dto = new ImageDto();
+		dto.url = imageUrl;
+
+		return dto;
 	}
 
+	private class ImageDto {
+		public String url;
+	}
 }
