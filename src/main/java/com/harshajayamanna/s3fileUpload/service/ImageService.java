@@ -40,7 +40,7 @@ public class ImageService {
 		try {
 			bimg = ImageIO.read(imageFile);
 		} catch (IOException e) {
-			throw new FileUploadException("AvatarImgValidator: Unable to read image.");
+			throw new FileUploadException("Unable to read image.");
 		}
 
 		AmazonS3 s3client = AmazonS3ClientBuilder.standard().withRegion("ap-southeast-1").build();
